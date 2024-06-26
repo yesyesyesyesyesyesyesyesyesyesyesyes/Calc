@@ -29,30 +29,58 @@ function exponentiate(x, y) {
     return formattedAnswer(Math.pow(parseFloat(x), parseFloat(y)));
 }
 
-document.getElementById("calculate").addEventListener("click", function() {
-    const num1 = document.getElementById("num1").value;
-    const num2 = document.getElementById("num2").value;
-    const operation = document.querySelector('input[name="operation"]:checked').value;
+function main() {
+    console.log("");
+    console.log("Select operation:");
+    console.log("    1. Addition");
+    console.log("    2. Subtraction");
+    console.log("    3. Multiplication");
+    console.log("    4. Division");
+    console.log("    5. Exponentiation");
+    console.log("");
 
-    let result;
-    switch (operation) {
-        case "add":
-            result = add(num1, num2);
+    const choice = parseInt(prompt("Enter the operation you want to do: (1/2/3/4/5)"));
+
+    let x, y;
+    switch (choice) {
+        case 1:
+            x = prompt("Enter the first number you want to add:");
+            y = prompt("Enter the amount you want to add to it:");
+            console.log(`${x} + ${y} = ${add(x, y)}`);
             break;
-        case "subtract":
-            result = subtract(num1, num2);
+        case 2:
+            x = prompt("Enter the number you want to subtract:");
+            y = prompt("Enter the amount you want to subtract it by:");
+            console.log(`${x} - ${y} = ${subtract(x, y)}`);
             break;
-        case "multiply":
-            result = multiply(num1, num2);
+        case 3:
+            x = prompt("Enter the first number you want to multiply:");
+            y = prompt("Enter the amount you want to multiply it by:");
+            console.log(`${x} * ${y} = ${multiply(x, y)}`);
             break;
-        case "divide":
-            result = divide(num1, num2);
+        case 4:
+            x = prompt("Enter the number you want to divide:");
+            y = prompt("Enter the amount you want to divide it by:");
+            if (y === '0') {
+                console.log("ERROR. YOU CANNOT DIVIDE BY 0.");
+            } else {
+                console.log(`${x} / ${y} = ${divide(x, y)}`);
+            }
             break;
-        case "exponentiate":
-            result = exponentiate(num1, num2);
+        case 5:
+            x = prompt("Enter the first number you want to raise to a power:");
+            y = prompt("Enter the power you want to raise it to:");
+            console.log(`${x} ^ ${y} = ${exponentiate(x, y)}`);
             break;
+        default:
+            console.log("Invalid choice. Please enter a number from 1 to 5.");
     }
+}
 
-    document.getElementById("result").innerText = `${num1} ${operation} ${num2} = ${result}`;
-});
-
+while (true) {
+    main();
+    console.log("");
+    console.log("");
+    console.log("");
+    prompt("Press Enter to restart");
+}
