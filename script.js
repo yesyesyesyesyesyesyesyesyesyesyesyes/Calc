@@ -77,10 +77,4 @@ function main() {
     }
 }
 
-while (true) {
-    main();
-    console.log("");
-    console.log("");
-    console.log("");
-    prompt("Press Enter to restart");
-}
+main();
