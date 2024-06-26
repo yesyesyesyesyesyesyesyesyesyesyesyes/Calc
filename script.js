@@ -1,47 +1,58 @@
-let currentInput = "";
-let operation = "";
-let prevInput = "";
-
-function appendToOutput(value) {
-    currentInput += value;
-    document.getElementById("result").value = currentInput;
+function formattedAnswer(answer) {
+    if (Number.isInteger(answer)) {
+        return answer.toLocaleString();
+    } else {
+        return answer.toLocaleString(undefined, { maximumFractionDigits: 10 });
+    }
 }
 
-function clearOutput() {
-    currentInput = "";
-    prevInput = "";
-    operation = "";
-    document.getElementById("result").value = "";
+function add(x, y) {
+    return formattedAnswer(parseFloat(x) + parseFloat(y));
 }
 
-function calculate() {
+function subtract(x, y) {
+    return formattedAnswer(parseFloat(x) - parseFloat(y));
+}
+
+function multiply(x, y) {
+    return formattedAnswer(parseFloat(x) * parseFloat(y));
+}
+
+function divide(x, y) {
+    if (parseFloat(y) === 0) {
+        return "ERROR. YOU CANNOT DIVIDE BY 0.";
+    }
+    return formattedAnswer(parseFloat(x) / parseFloat(y));
+}
+
+function exponentiate(x, y) {
+    return formattedAnswer(Math.pow(parseFloat(x), parseFloat(y)));
+}
+
+document.getElementById("calculate").addEventListener("click", function() {
+    const num1 = document.getElementById("num1").value;
+    const num2 = document.getElementById("num2").value;
+    const operation = document.querySelector('input[name="operation"]:checked').value;
+
+    let result;
     switch (operation) {
-        case '+':
-            document.getElementById("result").value = parseFloat(prevInput) + parseFloat(currentInput);
+        case "add":
+            result = add(num1, num2);
             break;
-        case '-':
-            document.getElementById("result").value = parseFloat(prevInput) - parseFloat(currentInput);
+        case "subtract":
+            result = subtract(num1, num2);
             break;
-        case '*':
-            document.getElementById("result").value = parseFloat(prevInput) * parseFloat(currentInput);
+        case "multiply":
+            result = multiply(num1, num2);
             break;
-        case '/':
-            if (parseFloat(currentInput) === 0) {
-                document.getElementById("result").value = "ERROR: Divide by zero";
-            } else {
-                document.getElementById("result").value = parseFloat(prevInput) / parseFloat(currentInput);
-            }
+        case "divide":
+            result = divide(num1, num2);
             break;
-        default:
+        case "exponentiate":
+            result = exponentiate(num1, num2);
             break;
     }
-    prevInput = currentInput;
-    currentInput = "";
-}
 
-function operation(op) {
-    if (currentInput !== "") {
-        calculate();
-    }
-    operation = op;
-}
+    document.getElementById("result").innerText = `${num1} ${operation} ${num2} = ${result}`;
+});
+
